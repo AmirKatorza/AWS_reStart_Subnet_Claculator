@@ -72,7 +72,6 @@ def first_addr(broadcast_ip: list, network_ip: list) -> list:
         if broadcast_ip[i] == network_ip[i]:
             first_addr_ip.append(network_ip[i])
         else:
-            # broadcast_ip[i] = ~ broadcast_ip[i] & 0xFF
             if i == 3:
                 first_addr_ip.append((network_ip[i] + 1))
             else:
@@ -94,3 +93,14 @@ def calc_subnets_cidr(hosts: int, subnets_num: int) -> int:
     hosts_per_subnets = hosts // subnets_num
     subnets_cidr = 32 - int(math.log(hosts_per_subnets, 2))
     return subnets_cidr
+
+
+def next_subnet(broadcast_addr: list) -> list:
+    for i in range(1, 5):
+        if broadcast_addr[-i] < 255:
+            broadcast_addr[-i] += 1
+            return broadcast_addr
+        elif i < 4:
+            broadcast_addr[-i] = 0
+        else:
+            return [0, 0, 0, 0]

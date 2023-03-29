@@ -32,6 +32,9 @@ def submit():
         last_host_ip = last_addr(broadcast_ip)
         entries_update(last_host_octets, last_host_ip)
 
+        next_subnet_ip = next_subnet(broadcast_ip)
+        entries_update(next_octets, next_subnet_ip)
+
         hosts = num_hosts(cidr_value.get())
         hosts_entry.configure(state=tk.NORMAL)
         hosts_value.set(str(hosts))
@@ -39,7 +42,7 @@ def submit():
 
     else:
         messagebox.showerror('Error', 'field must contain numbers 0-255')
-        delete_entries(target_ip_octets)
+        clear()
 
 
 def calc_subnets():
@@ -68,6 +71,8 @@ def delete_entries(entries: list):
 
 def clear():
     delete_entries(target_ip_octets)
+    for octet_ip in target_ip_octets:
+        octet_ip.configure(state=tk.NORMAL)
     delete_entries(subnet_mask_octets)
     delete_entries(network_octets)
     delete_entries(first_host_octets)
