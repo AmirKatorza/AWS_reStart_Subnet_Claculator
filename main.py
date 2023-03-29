@@ -78,6 +78,7 @@ def clear():
     delete_entries(first_host_octets)
     delete_entries(last_host_octets)
     delete_entries(broadcast_octets)
+    delete_entries(next_octets)
     delete_entries([add_subnets_entry, subnets_CIDR_entry, hosts_entry])
 
 
