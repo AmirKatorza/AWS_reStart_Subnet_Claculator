@@ -22,21 +22,22 @@ def validate_subnets(num_subnets: str) -> bool:
 
 
 def mask(ip_address: list, cidr: str):
-    if cidr == "":
-        if (1 <= ip_address[0]) <= 127:
+    if len(cidr) == 0:
+        if 1 <= ip_address[0] <= 127:
             mask_ip = [255, 0, 0, 0]
-            cidr = "8"
+            new_cidr = "8"
         elif 128 <= ip_address[0] <= 191:
             mask_ip = [255, 255, 0, 0]
-            cidr = "16"
+            new_cidr = "16"
         elif 192 <= ip_address[0] <= 223:
             mask_ip = [255, 255, 255, 0]
-            cidr = "24"
+            new_cidr = "24"
     else:
         mask_ip = [0, 0, 0, 0]
-        for i in range(int(cidr)):
+        new_cidr = cidr
+        for i in range(int(new_cidr)):
             mask_ip[i // 8] += (1 << (7 - i % 8))
-    return mask_ip, cidr
+    return mask_ip, new_cidr
 
 
 def network(mask_ip: list, ip: list) -> list:
